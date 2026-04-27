@@ -39,7 +39,4 @@ next-env.d.ts
 .vercel
 
 # Local settings (not project config)
-.claude/settings.local.json
-
-# User-specific skills (not part of the template)
-.claude/skills/customize/
+*.local.json

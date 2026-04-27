@@ -1,62 +1,56 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# Agent Guide
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+This repository is both a working FashionHero ecommerce demo and a reusable starting point for AI-assisted website builds. Keep guidance vendor-neutral: use this file for always-on repo instructions, `.agents/skills/*/SKILL.md` for reusable workflows, and `docs/agents/` for deeper project context.
 
-# Website Reverse-Engineer Template
+## Stack
 
-## What This Is
-A reusable template for reverse-engineering any website and rebuilding it as a faithful clone using Claude Code. The Next.js + shadcn/ui + Tailwind v4 base is pre-scaffolded — just fill in TARGET.md and run `/clone-website`.
-
-## Tech Stack
-- **Framework:** Next.js 16 (App Router, React 19, TypeScript strict)
-- **UI:** shadcn/ui (Radix primitives, Tailwind CSS v4, `cn()` utility)
-- **Icons:** Lucide React (default — will be replaced/supplemented by extracted SVGs)
-- **Styling:** Tailwind CSS v4 with oklch design tokens
-- **Deployment:** Vercel
+- Next.js 16 App Router, React 19, TypeScript strict
+- Tailwind CSS v4 with shadcn/ui conventions
+- `lucide-react` for new icons unless the project already has a matching local icon
+- Static catalog data in TypeScript files under `src/data`
 
 ## Commands
-- `npm run dev` — Start dev server
-- `npm run build` — Production build
-- `npm run lint` — ESLint check
 
-## Code Style
-- TypeScript strict mode, no `any`
-- Named exports, PascalCase components, camelCase utils
-- Tailwind utility classes, no inline styles
-- 2-space indentation
-- Responsive: mobile-first
+- `npm run dev` starts the local Next.js server.
+- `npm run build` verifies a production build.
+- `npm run lint` runs ESLint.
 
-## Design Principles
-- **Pixel-perfect emulation** — match the target's spacing, colors, typography exactly
-- **No personal aesthetic changes during emulation phase** — match 1:1 first, customize later
-- **Real content** — use actual text and assets from the target site, not placeholders
-- **Beauty-first** — every pixel matters
+Run `npm run lint` and `npm run build` before handing off changes that touch code, styling, routing, data contracts, or dependencies.
 
-## Project Structure
-```
-src/
-  app/              # Next.js routes
-  components/       # React components
-    ui/             # shadcn/ui primitives
-    icons.tsx       # Extracted SVG icons as React components
-  lib/
-    utils.ts        # cn() utility (shadcn)
-  types/            # TypeScript interfaces
-  hooks/            # Custom React hooks
-public/
-  images/           # Downloaded images from target site
-  videos/           # Downloaded videos from target site
-  seo/              # Favicons, OG images, webmanifest
-docs/
-  research/         # Inspection output (design tokens, components, layout)
-  design-references/ # Screenshots and visual references
-scripts/            # Asset download scripts
-```
+## Project Map
 
-## MOST IMPORTANT NOTES
-- When launching Claude Code agent teams, ALWAYS have each teammate work in their own worktree branch and merge everyone's work at the end, resolving any merge conflicts smartly since you are basically serving the orchestrator role and have full context to our goals, work given, work achieved, and desired outcomes.
+- `src/app/`: App Router routes and metadata.
+- `src/components/`: Shared UI, shell providers, ecommerce components, and homepage sections.
+- `src/components/ui/`: shadcn-style primitives.
+- `src/data/`: Static collections, products, sellers, and hero slide content.
+- `src/types/`: Shared TypeScript contracts for product, seller, cart, and collection data.
+- `public/images/`: Local image assets used by Next Image.
+- `docs/agents/`: Agent-facing architecture, design, data, and QA notes.
+- `docs/research/`: Generated inspection notes and component specs.
+- `docs/design-references/`: Generated screenshots and visual references.
+- `.agents/skills/`: Vendor-neutral agent skills for repeatable workflows.
 
-@docs/research/INSPECTION_GUIDE.md
-@TARGET.md
+## Editing Rules
+
+- Preserve user changes. Do not revert unrelated files or restore deleted historical assets unless explicitly asked.
+- Prefer existing components, data shapes, CSS tokens, and route patterns over new abstractions.
+- Keep TypeScript strict. Avoid `any`; update shared types when data contracts change.
+- Use `@/` imports for `src` modules.
+- Keep UI changes responsive and accessible: semantic links/buttons, useful `alt` text, keyboard-friendly controls, and no text overlap.
+- Use real local assets when available. Generated or downloaded artifacts belong in `public/`, `docs/research/`, or `docs/design-references/` as appropriate.
+- Do not add vendor-specific command files or docs such as `.claude`, `.cursor`, or tool-specific slash-command instructions.
+
+## Agent Workflows
+
+- For website inspection or rebuild work, start with `TARGET.md`.
+- Use `.agents/skills/inspect-website` to research a target and write specs.
+- Use `.agents/skills/build-frontend` to implement from specs in this app.
+- Use `.agents/skills/visual-qa` to compare implementation against references.
+- Keep generated research auditable. Specs should include source URL, viewport, assets, interaction states, and implementation targets.
+
+## More Context
+
+- Architecture: `docs/agents/architecture.md`
+- Design system: `docs/agents/design-system.md`
+- Data contracts: `docs/agents/data-contracts.md`
+- QA checklist: `docs/agents/qa-checklist.md`
