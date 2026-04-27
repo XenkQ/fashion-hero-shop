@@ -9,6 +9,7 @@ import { SizeSelector } from "@/components/size-selector";
 import { useCart } from "@/components/cart-provider";
 import { WishlistButton } from "@/components/wishlist-button";
 import { getSellerById } from "@/data/sellers";
+import { BuyNowExperiment } from "@/components/buy-now-experiment";
 
 interface ProductInfoProps {
   product: Product;
@@ -161,6 +162,13 @@ export function ProductInfo({ product }: ProductInfoProps) {
         sizes={product.sizes}
         selectedSize={selectedSize}
         onSelect={setSelectedSize}
+      />
+
+      <BuyNowExperiment
+        product={product}
+        selectedColor={selectedColor}
+        selectedSize={selectedSize}
+        onAddToCartFallback={handleAddToCart}
       />
 
       {/* Add to cart — prominent dark button */}
