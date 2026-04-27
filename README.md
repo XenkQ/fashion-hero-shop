@@ -47,10 +47,19 @@ npm run dev
 
 Open the dev server URL printed by Next.js.
 
+For a live-reload server while editing files, you can also run:
+
+```bash
+npm run live
+```
+
+Then open <http://localhost:3000>. Next.js refreshes the browser as you save changes.
+
 ## Commands
 
 ```bash
 npm run dev    # Start development server
+npm run live   # Start live-reload development server
 npm run build  # Production build
 npm run lint   # ESLint check
 ```
