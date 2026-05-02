@@ -8,6 +8,9 @@ import { CloseIcon } from "./icons";
 import { ColorSwatches } from "./color-swatches";
 import { SizeSelector } from "./size-selector";
 import { useCart } from "./cart-provider";
+import { getEffectiveProductPrice } from "@/lib/flash-deals";
+import { useFlashDealStore } from "@/components/flash-deal-store";
+import { PriceDisplay } from "@/components/price-display";
 
 interface QuickViewModalProps {
   product: Product;
@@ -23,6 +26,7 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const { addItem } = useCart();
   const dialogRef = useRef<HTMLDivElement>(null);
+  const isFlashDealActive = useFlashDealStore((state) => state.isFlashDealActive);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -48,6 +52,7 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
 
   const imageSrc = selectedColor.image;
   const showImage = imageSrc.startsWith("/images/");
+  const effectivePrice = getEffectiveProductPrice(product, isFlashDealActive);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -111,14 +116,12 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
           <div className="p-6 flex flex-col gap-4">
             <h2 className="text-xl font-normal text-charcoal">{product.name}</h2>
 
-            <div className="flex items-center gap-3">
-              <span className="text-lg font-medium text-charcoal">{product.price} zl</span>
-              {product.originalPrice && (
-                <span className="text-sm text-warm-gray line-through">
-                  {product.originalPrice} zl
-                </span>
-              )}
-            </div>
+            <PriceDisplay
+              product={product}
+              className="gap-3"
+              currentClassName="text-lg"
+              compareClassName="text-sm"
+            />
 
             <ColorSwatches
               colors={product.colors}
@@ -137,7 +140,7 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
               disabled={!selectedSize}
               className="w-full py-3.5 bg-charcoal text-white text-[12px] font-medium uppercase tracking-[0.6px] rounded-full hover:bg-charcoal-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {selectedSize ? "ADD TO CART - " + product.price + " zl" : "SELECT A SIZE"}
+              {selectedSize ? "ADD TO CART - " + effectivePrice + " zl" : "SELECT A SIZE"}
             </button>
 
             <Link

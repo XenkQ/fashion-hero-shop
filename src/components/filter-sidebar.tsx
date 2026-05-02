@@ -88,7 +88,13 @@ function Checkbox({
   onChange: () => void;
 }) {
   return (
-    <label className="flex items-center gap-2.5 py-1 cursor-pointer group">
+    <button
+      type="button"
+      role="checkbox"
+      aria-checked={checked}
+      onClick={onChange}
+      className="flex w-full items-center gap-2.5 py-1 text-left cursor-pointer group"
+    >
       <span
         className={cn(
           "w-4 h-4 rounded-sm border flex items-center justify-center transition-colors flex-shrink-0",
@@ -112,7 +118,7 @@ function Checkbox({
       <span className="text-[13px] text-charcoal/80 group-hover:text-charcoal transition-colors">
         {label}
       </span>
-    </label>
+    </button>
   );
 }
 

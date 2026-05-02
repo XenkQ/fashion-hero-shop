@@ -6,6 +6,7 @@ import { ProductInfo } from "@/components/product-info";
 import { ProductDetailsAccordion } from "@/components/product-details-accordion";
 import { RelatedProducts } from "@/components/related-products";
 import { RecentlyViewedSection } from "./recently-viewed-section";
+import { FloatingTimerBanner } from "@/components/floating-timer-banner";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -40,7 +41,7 @@ export default async function ProductPage({ params }: PageProps) {
   const related = getRelatedProducts(product);
 
   return (
-    <main className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-10">
+    <main className="max-w-7xl mx-auto px-4 md:px-8 py-6 pb-28 md:py-10 md:pb-28">
       {/* Two-column layout: image 60% left, info 40% right */}
       <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 md:gap-12">
         <ImageGallery
@@ -62,6 +63,7 @@ export default async function ProductPage({ params }: PageProps) {
 
       {/* Recently viewed */}
       <RecentlyViewedSection productId={product.id} />
+      <FloatingTimerBanner product={product} />
     </main>
   );
 }

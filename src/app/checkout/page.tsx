@@ -2,12 +2,17 @@
 
 import Link from "next/link";
 import { useCart } from "@/components/cart-provider";
+import { getEffectiveProductPrice } from "@/lib/flash-deals";
+import { useFlashDealStore } from "@/components/flash-deal-store";
+import { PriceDisplay } from "@/components/price-display";
 
 export default function CheckoutPage() {
   const { items } = useCart();
+  const isFlashDealActive = useFlashDealStore((state) => state.isFlashDealActive);
 
   const subtotal = items.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
+    (sum, item) =>
+      sum + getEffectiveProductPrice(item.product, isFlashDealActive) * item.quantity,
     0
   );
   const shipping = subtotal >= 299 ? 0 : 19.9;
@@ -140,29 +145,43 @@ export default function CheckoutPage() {
               </h2>
 
               <div className="space-y-4 mb-6">
-                {items.map((item, index) => (
-                  <div key={index} className="flex gap-3">
-                    {/* Thumbnail */}
-                    <div
-                      className="w-16 h-16 rounded flex-shrink-0"
-                      style={{
-                        background: `radial-gradient(ellipse at 50% 55%, ${item.color.hex}44 0%, ${item.color.hex}22 35%, #ece9e2 65%)`,
-                      }}
-                    />
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-xs font-medium uppercase tracking-wide truncate">
-                        {item.product.name}
-                      </h3>
-                      <p className="text-xs text-warm-gray">
-                        {item.color.name} / Size {item.size}
-                      </p>
-                      <p className="text-xs text-warm-gray">Qty: {item.quantity}</p>
+                {items.map((item, index) => {
+                  const itemTotal =
+                    getEffectiveProductPrice(item.product, isFlashDealActive) * item.quantity;
+
+                  return (
+                    <div key={index} className="flex gap-3">
+                      {/* Thumbnail */}
+                      <div
+                        className="w-16 h-16 rounded flex-shrink-0"
+                        style={{
+                          background: `radial-gradient(ellipse at 50% 55%, ${item.color.hex}44 0%, ${item.color.hex}22 35%, #ece9e2 65%)`,
+                        }}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-xs font-medium uppercase tracking-wide truncate">
+                          {item.product.name}
+                        </h3>
+                        <p className="text-xs text-warm-gray">
+                          {item.color.name} / Size {item.size}
+                        </p>
+                        <p className="text-xs text-warm-gray">Qty: {item.quantity}</p>
+                      </div>
+                      <div className="text-right">
+                        <PriceDisplay
+                          product={item.product}
+                          className="justify-end"
+                          currentClassName="text-sm"
+                        />
+                        {item.quantity > 1 && (
+                          <span className="block text-xs text-warm-gray">
+                            {itemTotal.toFixed(0)} zl total
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <span className="text-sm font-medium text-charcoal">
-                      {(item.product.price * item.quantity).toFixed(0)} zl
-                    </span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               <div className="space-y-2 pt-4 border-t border-cream-dark">

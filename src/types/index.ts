@@ -21,6 +21,7 @@ export interface Product {
   collections: string[];
   price: number;
   originalPrice?: number;
+  isFlashDeal?: boolean;
   colors: ProductColor[];
   sizes: number[];
   description: string;

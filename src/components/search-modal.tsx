@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { CloseIcon, SearchIcon } from "./icons";
 import { products } from "@/data/products";
+import { PriceDisplay } from "@/components/price-display";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -24,13 +25,15 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     return products.filter((p) => p.name.toLowerCase().includes(q)).slice(0, 6);
   }, [query]);
 
+  const handleClose = useCallback(() => {
+    setQuery("");
+    onClose();
+  }, [onClose]);
+
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus();
       document.body.style.overflow = "hidden";
-    } else {
-      setQuery("");
-      document.body.style.overflow = "";
     }
     return () => {
       document.body.style.overflow = "";
@@ -39,20 +42,20 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     }
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
       return () => document.removeEventListener("keydown", handleKeyDown);
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, handleClose]);
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={handleClose} />
 
       {/* Drop-down panel */}
       <div className="relative bg-white shadow-lg w-full">
@@ -68,7 +71,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               placeholder="Search for shoes..."
               className="flex-1 text-base text-charcoal placeholder:text-warm-gray outline-none bg-transparent"
             />
-            <button onClick={onClose} className="p-1 hover:opacity-60 transition-opacity" aria-label="Close search">
+            <button onClick={handleClose} className="p-1 hover:opacity-60 transition-opacity" aria-label="Close search">
               <CloseIcon />
             </button>
           </div>
@@ -86,7 +89,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <Link
                         key={product.id}
                         href={`/products/${product.slug}`}
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="flex items-center gap-4 p-2 rounded hover:bg-cream transition-colors"
                       >
                         <div
@@ -109,7 +112,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           </h4>
                           <p className="text-[12px] text-warm-gray">{color.name}</p>
                         </div>
-                        <span className="text-[14px] font-medium">{product.price} zl</span>
+                        <PriceDisplay
+                          product={product}
+                          className="shrink-0"
+                          currentClassName="text-[14px]"
+                        />
                       </Link>
                     );
                   })}

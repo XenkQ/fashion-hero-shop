@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 interface WishlistContextType {
   wishlistItems: string[];
@@ -40,7 +40,8 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const [wishlistItems, setWishlistItems] = useState<string[]>([]);
 
   useEffect(() => {
-    setWishlistItems(loadWishlist());
+    const timer = window.setTimeout(() => setWishlistItems(loadWishlist()), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const toggleWishlist = useCallback((productId: string) => {

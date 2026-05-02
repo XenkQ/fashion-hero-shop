@@ -9,6 +9,9 @@ import { SizeSelector } from "@/components/size-selector";
 import { useCart } from "@/components/cart-provider";
 import { WishlistButton } from "@/components/wishlist-button";
 import { getSellerById } from "@/data/sellers";
+import { getEffectiveProductPrice } from "@/lib/flash-deals";
+import { useFlashDealStore } from "@/components/flash-deal-store";
+import { PriceDisplay } from "@/components/price-display";
 
 interface ProductInfoProps {
   product: Product;
@@ -59,10 +62,12 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const [selectedColor, setSelectedColor] = useState<ProductColor>(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const { addItem } = useCart();
+  const isFlashDealActive = useFlashDealStore((state) => state.isFlashDealActive);
 
   const stock = useMemo(() => getStockInfo(product.id), [product.id]);
   const seller = getSellerById(product.sellerId);
   const deliveryDate = useMemo(() => getEstimatedDelivery(), []);
+  const effectivePrice = getEffectiveProductPrice(product, isFlashDealActive);
 
   const collectionName = product.category === "men"
     ? "Men's Shoes"
@@ -121,14 +126,12 @@ export function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       {/* Price */}
-      <div className="flex items-center gap-3">
-        <span className="text-lg font-medium text-charcoal">{product.price} zl</span>
-        {product.originalPrice && (
-          <span className="text-sm text-warm-gray line-through">
-            {product.originalPrice} zl
-          </span>
-        )}
-      </div>
+      <PriceDisplay
+        product={product}
+        className="gap-3"
+        currentClassName="text-lg"
+        compareClassName="text-sm"
+      />
 
       {/* Stock indicator */}
       <div className="flex items-center gap-2">
@@ -169,7 +172,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
         disabled={!selectedSize}
         className="w-full py-4 bg-charcoal text-white text-[12px] font-medium uppercase tracking-[0.6px] rounded-full hover:bg-charcoal-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
       >
-        {selectedSize ? "ADD TO CART - " + product.price + " zl" : "SELECT A SIZE"}
+        {selectedSize ? "ADD TO CART - " + effectivePrice + " zl" : "SELECT A SIZE"}
       </button>
 
       {/* Shipping info */}

@@ -19,21 +19,26 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const STORAGE_KEY = "stepforward_user";
 
+function loadStoredUser(): User | null {
+  try {
+    if (typeof window === "undefined") return null;
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : null;
+  } catch {
+    return null;
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        setUser(JSON.parse(stored));
-      }
-    } catch {
-      // ignore parse errors
-    }
+    const timer = window.setTimeout(() => setUser(loadStoredUser()), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const login = useCallback(async (email: string, _password: string) => {
+    void _password;
     // Mock login — always succeeds
     const newUser: User = {
       email,

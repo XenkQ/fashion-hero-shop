@@ -7,6 +7,7 @@ import type { Product } from "@/types";
 import { WishlistButton } from "./wishlist-button";
 import { useQuickView } from "./quick-view-provider";
 import { getSellerById } from "@/data/sellers";
+import { PriceDisplay } from "@/components/price-display";
 
 interface ProductCardProps {
   product: Product;
@@ -140,14 +141,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
       </div>
 
       {/* Price */}
-      <div className="flex items-center gap-2">
-        <span className="text-[14px] font-medium">{product.price} zl</span>
-        {product.originalPrice && (
-          <span className="text-xs text-warm-gray line-through">
-            {product.originalPrice} zl
-          </span>
-        )}
-      </div>
+      <PriceDisplay product={product} currentClassName="text-[14px]" />
     </div>
   );
 }

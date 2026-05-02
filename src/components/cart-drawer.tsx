@@ -5,6 +5,9 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CloseIcon, MinusIcon, PlusIcon } from "./icons";
 import type { CartItem } from "@/types";
+import { getEffectiveProductPrice } from "@/lib/flash-deals";
+import { useFlashDealStore } from "@/components/flash-deal-store";
+import { PriceDisplay } from "@/components/price-display";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -21,8 +24,10 @@ export function CartDrawer({
   onUpdateQuantity,
   onRemove,
 }: CartDrawerProps) {
+  const isFlashDealActive = useFlashDealStore((state) => state.isFlashDealActive);
   const subtotal = items.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
+    (sum, item) =>
+      sum + getEffectiveProductPrice(item.product, isFlashDealActive) * item.quantity,
     0
   );
   const freeShippingThreshold = 299;
@@ -75,12 +80,12 @@ export function CartDrawer({
                 Your cart is empty. Start shopping!
               </p>
               <div className="space-y-2">
-                <a href="/collections/womens" className="btn-cta block">
+                <Link href="/collections/womens" className="btn-cta block">
                   SHOP WOMENS
-                </a>
-                <a href="/collections/mens" className="btn-cta-outline block">
+                </Link>
+                <Link href="/collections/mens" className="btn-cta-outline block">
                   SHOP MENS
-                </a>
+                </Link>
               </div>
             </div>
           ) : (
@@ -88,6 +93,9 @@ export function CartDrawer({
               {items.map((item, index) => {
                 const thumbSrc = item.color.image;
                 const showThumb = thumbSrc.startsWith("/images/");
+                const itemTotal =
+                  getEffectiveProductPrice(item.product, isFlashDealActive) * item.quantity;
+
                 return (
                   <div key={index} className="flex gap-3 pb-4 border-b border-cream-dark">
                     {/* Thumbnail */}
@@ -134,9 +142,18 @@ export function CartDrawer({
                             <PlusIcon />
                           </button>
                         </div>
-                        <span className="text-sm font-medium">
-                          {(item.product.price * item.quantity).toFixed(0)} zl
-                        </span>
+                        <div className="text-right">
+                          <PriceDisplay
+                            product={item.product}
+                            className="justify-end"
+                            currentClassName="text-sm"
+                          />
+                          {item.quantity > 1 && (
+                            <span className="block text-xs text-warm-gray">
+                              {itemTotal.toFixed(0)} zl total
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
