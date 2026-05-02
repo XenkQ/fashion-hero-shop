@@ -1,4 +1,4 @@
-ang:
+en:
 
 Feature: Express "Buy Now" (Mobile One-Click Checkout) with integrated Blik, Google Pay, and Apple Pay options (available only for products priced at 150 PLN and above).
 
