@@ -10,6 +10,7 @@ import { FloatingTimerBanner } from "@/components/floating-timer-banner";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ flash?: string }>;
 }
 
 export function generateStaticParams() {
@@ -30,8 +31,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function ProductPage({ params }: PageProps) {
+export default async function ProductPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
+  const { flash } = await searchParams;
   const product = getProduct(slug);
 
   if (!product) {
@@ -39,6 +41,7 @@ export default async function ProductPage({ params }: PageProps) {
   }
 
   const related = getRelatedProducts(product);
+  const isFlashDealContext = flash === "1";
 
   return (
     <main className="max-w-7xl mx-auto px-4 md:px-8 py-6 pb-28 md:py-10 md:pb-28">
@@ -50,7 +53,7 @@ export default async function ProductPage({ params }: PageProps) {
           colorName={product.colors[0]?.name}
           colorHex={product.colors[0]?.hex}
         />
-        <ProductInfo product={product} />
+        <ProductInfo product={product} isFlashDealContext={isFlashDealContext} />
       </div>
 
       {/* Accordion details */}
@@ -63,7 +66,7 @@ export default async function ProductPage({ params }: PageProps) {
 
       {/* Recently viewed */}
       <RecentlyViewedSection productId={product.id} />
-      <FloatingTimerBanner product={product} />
+      <FloatingTimerBanner product={product} isFlashDealContext={isFlashDealContext} />
     </main>
   );
 }

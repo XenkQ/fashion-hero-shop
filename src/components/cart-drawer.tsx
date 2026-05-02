@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { CloseIcon, MinusIcon, PlusIcon } from "./icons";
 import type { CartItem } from "@/types";
 import { getEffectiveProductPrice } from "@/lib/flash-deals";
-import { useFlashDealStore } from "@/components/flash-deal-store";
 import { PriceDisplay } from "@/components/price-display";
 
 interface CartDrawerProps {
@@ -24,10 +23,8 @@ export function CartDrawer({
   onUpdateQuantity,
   onRemove,
 }: CartDrawerProps) {
-  const isFlashDealActive = useFlashDealStore((state) => state.isFlashDealActive);
   const subtotal = items.reduce(
-    (sum, item) =>
-      sum + getEffectiveProductPrice(item.product, isFlashDealActive) * item.quantity,
+    (sum, item) => sum + getEffectiveProductPrice(item.product, false) * item.quantity,
     0
   );
   const freeShippingThreshold = 299;
@@ -94,7 +91,7 @@ export function CartDrawer({
                 const thumbSrc = item.color.image;
                 const showThumb = thumbSrc.startsWith("/images/");
                 const itemTotal =
-                  getEffectiveProductPrice(item.product, isFlashDealActive) * item.quantity;
+                  getEffectiveProductPrice(item.product, false) * item.quantity;
 
                 return (
                   <div key={index} className="flex gap-3 pb-4 border-b border-cream-dark">

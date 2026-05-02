@@ -3,16 +3,13 @@
 import Link from "next/link";
 import { useCart } from "@/components/cart-provider";
 import { getEffectiveProductPrice } from "@/lib/flash-deals";
-import { useFlashDealStore } from "@/components/flash-deal-store";
 import { PriceDisplay } from "@/components/price-display";
 
 export default function CheckoutPage() {
   const { items } = useCart();
-  const isFlashDealActive = useFlashDealStore((state) => state.isFlashDealActive);
 
   const subtotal = items.reduce(
-    (sum, item) =>
-      sum + getEffectiveProductPrice(item.product, isFlashDealActive) * item.quantity,
+    (sum, item) => sum + getEffectiveProductPrice(item.product, false) * item.quantity,
     0
   );
   const shipping = subtotal >= 299 ? 0 : 19.9;
@@ -147,7 +144,7 @@ export default function CheckoutPage() {
               <div className="space-y-4 mb-6">
                 {items.map((item, index) => {
                   const itemTotal =
-                    getEffectiveProductPrice(item.product, isFlashDealActive) * item.quantity;
+                    getEffectiveProductPrice(item.product, false) * item.quantity;
 
                   return (
                     <div key={index} className="flex gap-3">

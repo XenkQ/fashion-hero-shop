@@ -17,16 +17,16 @@ export function getFlashDealPrice(price: number): number {
   return Math.round(price * (1 - FLASH_DEAL_DISCOUNT_RATE));
 }
 
-export function getEffectiveProductPrice(product: Product, isFlashDealActive: boolean): number {
-  if (!product.isFlashDeal || !isFlashDealActive) {
+export function getEffectiveProductPrice(product: Product, applyFlashDeal: boolean): number {
+  if (!product.isFlashDeal || !applyFlashDeal) {
     return product.price;
   }
 
   return getFlashDealPrice(product.price);
 }
 
-export function getProductPriceDisplay(product: Product, isFlashDealActive: boolean) {
-  const isFlashDealPrice = Boolean(product.isFlashDeal && isFlashDealActive);
+export function getProductPriceDisplay(product: Product, applyFlashDeal: boolean) {
+  const isFlashDealPrice = Boolean(product.isFlashDeal && applyFlashDeal);
 
   return {
     isFlashDealPrice,

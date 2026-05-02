@@ -1,8 +1,8 @@
-# Mobile Flash Deals Prototype Plan
+# Flash Deals Prototype Plan
 
 ## Summary
 
-Build a session-persistent flash deal campaign with a fixed 20% discount, a 15:00 global countdown, a mobile-first homepage carousel above `Our Favorites`, and a bottom sticky/fixed PDP timer banner for eligible products. Use `zustand` as the state management library because the repo currently has no external state library and this feature needs shared countdown state across routes.
+Build a session-persistent flash deal campaign with a fixed 20% discount, a 15:00 global countdown, a responsive homepage carousel above `Our Favorites`, and a bottom sticky/fixed PDP timer banner for eligible products. Use `zustand` as the state management library because the repo currently has no external state library and this feature needs shared countdown state across routes.
 
 ## Key Changes
 
@@ -15,14 +15,14 @@ Build a session-persistent flash deal campaign with a fixed 20% discount, a 15:0
 ## UI Implementation
 
 - Add `FlashDealCarousel` as a client component and place it directly above `ProductCarousel` / `Our Favorites` in `src/app/page.tsx`.
-- Carousel behavior: render only while active, use a high-contrast section background, support mobile-first horizontal scroll with snap cards, and show countdown plus product price deltas.
+- Carousel behavior: render only while active, use a high-contrast section background, support responsive horizontal scroll with snap cards, and show countdown plus product price deltas.
 - Add `FloatingTimerBanner` on PDP: render only for `product.isFlashDeal === true` and active deals, anchor to the bottom viewport, and include countdown, 20% discount message, original price, and discounted price.
 - Update existing price surfaces to use the shared helper where relevant: `ProductCard`, `ProductInfo`, `QuickViewModal`, `SearchModal`, cart drawer, and checkout.
 
 ## Expiration Behavior
 
 - When countdown reaches `00:00`, `FlashDealCarousel` and `FloatingTimerBanner` return `null` and are removed from the DOM.
-- Product, cart, checkout, quick-view, and search prices immediately render the original product price only.
+- Product, cart, checkout, quick-view, and search prices immediately render the original product price only outside the Flash Deals panel context.
 
 ## Test Plan
 

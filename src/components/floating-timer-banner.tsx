@@ -7,13 +7,14 @@ import { useFlashDealStore } from "@/components/flash-deal-store";
 
 interface FloatingTimerBannerProps {
   product: Product;
+  isFlashDealContext?: boolean;
 }
 
-export function FloatingTimerBanner({ product }: FloatingTimerBannerProps) {
+export function FloatingTimerBanner({ product, isFlashDealContext = false }: FloatingTimerBannerProps) {
   const remainingSeconds = useFlashDealStore((state) => state.remainingSeconds);
   const isFlashDealActive = useFlashDealStore((state) => state.isFlashDealActive);
 
-  if (!product.isFlashDeal || !isFlashDealActive || remainingSeconds <= 0) {
+  if (!product.isFlashDeal || !isFlashDealContext || !isFlashDealActive || remainingSeconds <= 0) {
     return null;
   }
 

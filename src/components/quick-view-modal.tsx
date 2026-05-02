@@ -9,7 +9,6 @@ import { ColorSwatches } from "./color-swatches";
 import { SizeSelector } from "./size-selector";
 import { useCart } from "./cart-provider";
 import { getEffectiveProductPrice } from "@/lib/flash-deals";
-import { useFlashDealStore } from "@/components/flash-deal-store";
 import { PriceDisplay } from "@/components/price-display";
 
 interface QuickViewModalProps {
@@ -26,7 +25,6 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const { addItem } = useCart();
   const dialogRef = useRef<HTMLDivElement>(null);
-  const isFlashDealActive = useFlashDealStore((state) => state.isFlashDealActive);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -52,7 +50,7 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
 
   const imageSrc = selectedColor.image;
   const showImage = imageSrc.startsWith("/images/");
-  const effectivePrice = getEffectiveProductPrice(product, isFlashDealActive);
+  const effectivePrice = getEffectiveProductPrice(product, false);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

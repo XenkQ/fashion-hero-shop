@@ -1,8 +1,8 @@
-# Mobile Flash Deals Implementation Summary
+# Flash Deals Implementation Summary
 
 ## Implemented
 
-- Saved the original implementation plan in `docs/implementation-plans/mobile-flash-deals.md`.
+- Saved the original implementation plan in `docs/implementation-plans/flash-deals.md`.
 - Added `zustand` to `package.json` and `package-lock.json`.
 - Added shared flash deal logic in `src/lib/flash-deals.ts`:
   - fixed 20% discount calculation
@@ -35,9 +35,9 @@
 
 ## Behavior
 
-- Active flash deals show the original price as strikethrough plus the discounted price in `text-destructive`.
+- Active flash deals show the original price as strikethrough plus the discounted price in `text-destructive` when viewed through the Flash Deals panel.
 - The homepage flash deal carousel and PDP floating banner return `null` once the countdown reaches `00:00`, removing them from the DOM.
-- Product, cart, checkout, quick-view, and search pricing reverts to original catalog pricing when the global flag becomes inactive.
+- Product, cart, checkout, quick-view, and search pricing stays on standard catalog pricing outside the Flash Deals panel context.
 - The countdown persists across navigation and refreshes within the current tab using `sessionStorage`.
 
 ## Verification

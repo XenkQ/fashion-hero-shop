@@ -15,6 +15,7 @@ import { PriceDisplay } from "@/components/price-display";
 
 interface ProductInfoProps {
   product: Product;
+  isFlashDealContext?: boolean;
 }
 
 function StarRating({ rating, count }: { rating: number; count: number }) {
@@ -58,7 +59,7 @@ function getEstimatedDelivery(): string {
   return `${fmt.format(startDate)} - ${fmt.format(endDate)}`;
 }
 
-export function ProductInfo({ product }: ProductInfoProps) {
+export function ProductInfo({ product, isFlashDealContext = false }: ProductInfoProps) {
   const [selectedColor, setSelectedColor] = useState<ProductColor>(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const { addItem } = useCart();
@@ -67,7 +68,8 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const stock = useMemo(() => getStockInfo(product.id), [product.id]);
   const seller = getSellerById(product.sellerId);
   const deliveryDate = useMemo(() => getEstimatedDelivery(), []);
-  const effectivePrice = getEffectiveProductPrice(product, isFlashDealActive);
+  const applyFlashDeal = isFlashDealContext && isFlashDealActive;
+  const effectivePrice = getEffectiveProductPrice(product, applyFlashDeal);
 
   const collectionName = product.category === "men"
     ? "Men's Shoes"
@@ -128,6 +130,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
       {/* Price */}
       <PriceDisplay
         product={product}
+        applyFlashDeal={applyFlashDeal}
         className="gap-3"
         currentClassName="text-lg"
         compareClassName="text-sm"

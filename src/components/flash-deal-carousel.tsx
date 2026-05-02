@@ -28,7 +28,7 @@ export function FlashDealCarousel() {
           <div>
             <div className="mb-2 inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.7px] text-white/70">
               <Flame className="h-3.5 w-3.5 text-destructive" aria-hidden="true" />
-              Mobile Flash Deals
+              Flash Deals
             </div>
             <h2 className="text-2xl font-normal md:text-[34px]">20% off favorites</h2>
           </div>
@@ -47,7 +47,7 @@ export function FlashDealCarousel() {
 
             return (
               <Link
-                href={`/products/${product.slug}`}
+                href={`/products/${product.slug}?flash=1`}
                 key={product.id}
                 className="min-w-[72vw] snap-start bg-white text-charcoal sm:min-w-[260px] md:min-w-[230px]"
               >
@@ -79,6 +79,7 @@ export function FlashDealCarousel() {
                   <p className="mb-2 text-[12px] text-warm-gray">{firstColor.name}</p>
                   <PriceDisplay
                     product={product}
+                    applyFlashDeal={isFlashDealActive}
                     currentClassName="text-[15px]"
                     compareClassName="text-[12px]"
                   />

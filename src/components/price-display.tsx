@@ -3,10 +3,10 @@
 import { cn } from "@/lib/utils";
 import { getProductPriceDisplay } from "@/lib/flash-deals";
 import type { Product } from "@/types";
-import { useFlashDealStore } from "@/components/flash-deal-store";
 
 interface PriceDisplayProps {
   product: Product;
+  applyFlashDeal?: boolean;
   className?: string;
   currentClassName?: string;
   compareClassName?: string;
@@ -14,14 +14,14 @@ interface PriceDisplayProps {
 
 export function PriceDisplay({
   product,
+  applyFlashDeal = false,
   className,
   currentClassName,
   compareClassName,
 }: PriceDisplayProps) {
-  const isFlashDealActive = useFlashDealStore((state) => state.isFlashDealActive);
   const { currentPrice, compareAtPrice, isFlashDealPrice } = getProductPriceDisplay(
     product,
-    isFlashDealActive
+    applyFlashDeal
   );
 
   return (
