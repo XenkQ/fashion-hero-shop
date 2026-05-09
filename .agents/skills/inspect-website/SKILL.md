@@ -10,18 +10,18 @@ Use this skill to convert a target website into auditable implementation inputs.
 ## Workflow
 
 1. Read `TARGET.md` for URL, pages, fidelity, scope, and exclusions.
-2. Capture desktop, tablet, and mobile screenshots into `docs/design-references/`.
+2. Capture desktop, tablet, and mobile screenshots into `.agents/context/`.
 3. Extract design tokens, component inventory, layout architecture, assets, and interaction behavior.
-4. Write findings into `docs/research/`.
-5. For each buildable section, write a component spec in `docs/research/components/`.
+4. Write findings into `.agents/context/`.
+5. For each buildable section, write a component spec in `.agents/context/`.
 
 ## Required Outputs
 
-- `docs/research/DESIGN_TOKENS.md`
-- `docs/research/COMPONENT_INVENTORY.md`
-- `docs/research/LAYOUT_ARCHITECTURE.md`
-- `docs/research/INTERACTION_PATTERNS.md`
-- `docs/research/ASSETS.md`
-- One `docs/research/components/<component-name>.spec.md` file per section or component to build
+- `.agents/context/DESIGN_TOKENS.md`
+- `.agents/context/COMPONENT_INVENTORY.md`
+- `.agents/context/LAYOUT_ARCHITECTURE.md`
+- `.agents/context/INTERACTION_PATTERNS.md`
+- `.agents/context/ASSETS.md`
+- One `.agents/context/<component-name>.spec.md` file per section or component to build
 
 Use `references/inspection-checklist.md` for the detailed capture checklist.

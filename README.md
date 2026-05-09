@@ -72,15 +72,15 @@ src/components/         Shared UI and ecommerce components
 src/data/               Static product, collection, seller, and hero data
 src/types/              TypeScript contracts
 public/images/          Local image assets
-docs/agents/            Agent-facing project documentation
-docs/research/          Generated inspection and component specs
-docs/design-references/ Generated screenshots and visual references
+.agents/context/        Agent-facing project documentation, research, specs, and visual references
+.agents/context/implementation-plans/     Generated implementation plans
+.agents/context/implementation-summaries/ Generated implementation summaries
 .agents/skills/         Vendor-neutral reusable agent skills
 ```
 
 ## Working With AI Agents
 
-Agents should read `AGENTS.md` first. For website rebuild or template work, fill out `TARGET.md` when available, inspect the target into `docs/research/`, implement from specs, and verify with `npm run lint` plus `npm run build` for code changes.
+Agents should read `AGENTS.md` first. For website rebuild or template work, fill out `TARGET.md` when available, inspect the target into `.agents/context/`, implement from specs, and verify with `npm run lint` plus `npm run build` for code changes.
 
 This repo intentionally avoids vendor-specific agent files. Reusable agent workflows live under `.agents/skills/` using `SKILL.md`.
 
@@ -155,15 +155,15 @@ src/components/         Wspólne komponenty UI i ecommerce
 src/data/               Statyczne dane produktów, kolekcji, sprzedawców i hero
 src/types/              Kontrakty TypeScript
 public/images/          Lokalne assety graficzne
-docs/agents/            Dokumentacja projektu dla agentów
-docs/research/          Wygenerowane inspekcje i specyfikacje komponentów
-docs/design-references/ Wygenerowane screenshoty i referencje wizualne
+.agents/context/        Dokumentacja projektu dla agentów, research, specyfikacje i referencje wizualne
+.agents/context/implementation-plans/     Wygenerowane plany implementacji
+.agents/context/implementation-summaries/ Wygenerowane podsumowania implementacji
 .agents/skills/         Neutralne narzędziowo workflow agentów
 ```
 
 ## Praca Z Agentami AI
 
-Agenci powinni najpierw przeczytać `AGENTS.md`. Przy pracy nad przebudową strony lub szablonu wypełnij `TARGET.md`, jeśli jest dostępny, wykonaj inspekcję do `docs/research/`, implementuj na podstawie specyfikacji, a przy zmianach w kodzie sprawdź wynik przez `npm run lint` i `npm run build`.
+Agenci powinni najpierw przeczytać `AGENTS.md`. Przy pracy nad przebudową strony lub szablonu wypełnij `TARGET.md`, jeśli jest dostępny, wykonaj inspekcję do `.agents/context/`, implementuj na podstawie specyfikacji, a przy zmianach w kodzie sprawdź wynik przez `npm run lint` i `npm run build`.
 
 Repozytorium celowo nie zawiera plików instrukcji specyficznych dla jednego vendora narzędzi AI. Powtarzalne workflow agentów znajdują się w `.agents/skills/` jako pliki `SKILL.md`.
 

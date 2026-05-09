@@ -1,6 +1,6 @@
 ---
 name: build-frontend
-description: Implement frontend pages, sections, and components in this Next.js ecommerce project from specs or agent research. Use when asked to build UI from docs, screenshots, TARGET.md, or docs/research component specs.
+description: Implement frontend pages, sections, and components in this Next.js ecommerce project from specs or agent research. Use when asked to build UI from context docs, screenshots, TARGET.md, or .agents/context component specs.
 ---
 
 # Build Frontend
@@ -9,8 +9,8 @@ Use this skill to implement researched UI inside the existing FashionHero app.
 
 ## Workflow
 
-1. Read `AGENTS.md` and the relevant files in `docs/agents/`.
-2. If building from target research, read the relevant `docs/research/components/*.spec.md` files.
+1. Read `AGENTS.md` and the relevant files in `.agents/context/`.
+2. If building from target research, read the relevant `.agents/context/*.spec.md` files.
 3. Map the work to existing routes, components, data files, and shared types.
 4. Implement with existing Tailwind, shadcn/ui, provider, and data patterns.
 5. Run `npm run lint` and `npm run build`.

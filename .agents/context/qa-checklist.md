@@ -31,7 +31,7 @@ Look for text overlap, clipped buttons, image distortion, broken grids, and inac
 
 For target-driven work:
 
-- Save source screenshots to `docs/design-references/`.
-- Save extracted specs to `docs/research/`.
+- Save source screenshots to `.agents/context/`.
+- Save extracted specs to `.agents/context/`.
 - Compare implementation against references at desktop and mobile sizes.
 - Document known mismatches before handoff.

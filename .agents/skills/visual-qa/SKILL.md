@@ -9,7 +9,7 @@ Use this skill after UI implementation or before handoff.
 
 ## Workflow
 
-1. Read the relevant expected behavior in `TARGET.md`, `docs/research/`, and `docs/agents/qa-checklist.md`.
+1. Read the relevant expected behavior in `TARGET.md`, `.agents/context/`, and `.agents/context/qa-checklist.md`.
 2. Run static checks when code changed: `npm run lint` and `npm run build`.
 3. Compare desktop, tablet, and mobile layouts against available screenshots.
 4. Test primary interactions: navigation, search, quick view, cart, wishlist, filters, accordions, and checkout flow.

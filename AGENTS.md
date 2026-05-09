@@ -1,6 +1,6 @@
 # Agent Guide
 
-This repository is both a working FashionHero ecommerce demo and a reusable starting point for AI-assisted website builds. Keep guidance vendor-neutral: use this file for always-on repo instructions, `.agents/skills/*/SKILL.md` for reusable workflows, and `docs/agents/` for deeper project context.
+This repository is both a working FashionHero ecommerce demo and a reusable starting point for AI-assisted website builds. Keep guidance vendor-neutral: use this file for always-on repo instructions, `.agents/skills/*/SKILL.md` for reusable workflows, and `.agents/context/` for deeper project context.
 
 ## Stack
 
@@ -25,9 +25,9 @@ Run `npm run lint` and `npm run build` before handing off changes that touch cod
 - `src/data/`: Static collections, products, sellers, and hero slide content.
 - `src/types/`: Shared TypeScript contracts for product, seller, cart, and collection data.
 - `public/images/`: Local image assets used by Next Image.
-- `docs/agents/`: Agent-facing architecture, design, data, and QA notes.
-- `docs/research/`: Generated inspection notes and component specs.
-- `docs/design-references/`: Generated screenshots and visual references.
+- `.agents/context/`: Agent-facing architecture, design, data, QA notes, generated inspection notes, and visual references.
+- `.agents/context/implementation-plans/`: Generated implementation plans.
+- `.agents/context/implementation-summaries/`: Generated implementation summaries.
 - `.agents/skills/`: Vendor-neutral agent skills for repeatable workflows.
 
 ## Editing Rules
@@ -37,7 +37,7 @@ Run `npm run lint` and `npm run build` before handing off changes that touch cod
 - Keep TypeScript strict. Avoid `any`; update shared types when data contracts change.
 - Use `@/` imports for `src` modules.
 - Keep UI changes responsive and accessible: semantic links/buttons, useful `alt` text, keyboard-friendly controls, and no text overlap.
-- Use real local assets when available. Generated or downloaded artifacts belong in `public/`, `docs/research/`, or `docs/design-references/` as appropriate.
+- Use real local assets when available. Generated or downloaded artifacts belong in `public/` or `.agents/context/` as appropriate.
 - Do not add vendor-specific command files or docs such as `.claude`, `.cursor`, or tool-specific slash-command instructions.
 
 ## Agent Workflows
@@ -50,7 +50,7 @@ Run `npm run lint` and `npm run build` before handing off changes that touch cod
 
 ## More Context
 
-- Architecture: `docs/agents/architecture.md`
-- Design system: `docs/agents/design-system.md`
-- Data contracts: `docs/agents/data-contracts.md`
-- QA checklist: `docs/agents/qa-checklist.md`
+- Architecture: `.agents/context/architecture.md`
+- Design system: `.agents/context/design-system.md`
+- Data contracts: `.agents/context/data-contracts.md`
+- QA checklist: `.agents/context/qa-checklist.md`
