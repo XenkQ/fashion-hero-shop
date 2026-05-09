@@ -46,3 +46,9 @@ Sprzedawcy są niezależnymi sklepami i markami. Zwroty są darmowe dla kupując
 ## Model danych
 
 Kluczowe encje: `Product`, `Collection`, `Seller`, cart i wishlist. Produkty mają slug, kategorie, kolekcje, ceny, warianty, obrazy, opisy, tagi oraz `sellerId`; `sellerId` musi wskazywać sprzedawcę. Routing zależy od unikalnych slugów; cart/wishlist są demo-local.
+
+## Weryfikacja
+
+- Zawsze uruchom `npm run lint` i `npm run build` przed uznaniem zmian za gotowe.
+- Sprawdź wizualnie widok mobilny pod kątem nachodzącego tekstu i poprawnego układu UI.
+- Zweryfikuj style utworzonych elementów na podstawie wytycznych z `.agents/context/DESIGN.md`.
