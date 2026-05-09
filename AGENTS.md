@@ -51,6 +51,6 @@ Run `npm run lint` and `npm run build` before handing off changes that touch cod
 ## More Context
 
 - Architecture: `.agents/context/architecture.md`
-- Design system: `.agents/context/design-system.md`
+- Design: `.agents/context/DESIGN.md`
 - Data contracts: `.agents/context/data-contracts.md`
 - QA checklist: `.agents/context/qa-checklist.md`
