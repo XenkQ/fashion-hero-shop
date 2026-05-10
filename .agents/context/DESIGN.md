@@ -185,3 +185,12 @@ The shape language is primarily **Soft (0.25rem)**, bordering on sharp. This mai
 ## Imagery
 
 Use large product, collection, and lifestyle images as the primary visual signal. Images should have meaningful alt text and stable dimensions or fill behavior so layouts do not shift.
+
+## Agent Design Guidelines
+
+- Aim for a clean, modern fashion marketplace experience. Think Zalando, not a general classifieds or auction interface.
+- Product photos are primary content. Give imagery enough space and avoid clutter around product cards, galleries, and hero sections.
+- Design mobile-first because most shoppers browse on phones.
+- Keep interfaces practical and commerce-focused: clear navigation, readable product information, visible pricing, accessible actions, and predictable states.
+- Reuse existing components, CSS tokens, layout patterns, and shadcn-style primitives before creating custom UI.
+- Use icons from `lucide-react` for new controls unless the project already has a matching local icon.
