@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { withSiteBasePath } from "@/lib/site-paths";
 
 interface ImageGalleryProps {
   images: string[];
@@ -56,7 +57,7 @@ export function ImageGallery({ images, productName, colorName, colorHex = "#8a7d
             }}
           >
             <Image
-              src={currentImage}
+              src={withSiteBasePath(currentImage)}
               alt={`${productName}${colorName ? ` - ${colorName}` : ""}`}
               width={800}
               height={800}
@@ -109,7 +110,7 @@ export function ImageGallery({ images, productName, colorName, colorHex = "#8a7d
             >
               {hasRealImage(image) ? (
                 <Image
-                  src={image}
+                  src={withSiteBasePath(image)}
                   alt={`${productName} thumbnail ${index + 1}`}
                   width={80}
                   height={80}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { withSiteBasePath } from "@/lib/site-paths";
 
 const promos = [
   {
@@ -46,7 +47,7 @@ export function PromoTiles() {
           >
             {/* Background image */}
             <Image
-              src={promo.image}
+              src={withSiteBasePath(promo.image)}
               alt={promo.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"

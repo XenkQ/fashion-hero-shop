@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { withSiteBasePath } from "@/lib/site-paths";
 
 export const metadata: Metadata = {
   title: "About - FashionHero",
@@ -39,7 +40,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
         <Image
-          src="/images/hero/hero-3.jpg"
+          src={withSiteBasePath("/images/hero/hero-3.jpg")}
           alt="FashionHero shoes"
           fill
           className="object-cover"
@@ -91,7 +92,7 @@ export default function AboutPage() {
       {/* Image break */}
       <section className="relative h-[40vh] min-h-[300px] overflow-hidden">
         <Image
-          src="/images/hero/hero-2.jpg"
+          src={withSiteBasePath("/images/hero/hero-2.jpg")}
           alt="People running in FashionHero shoes"
           fill
           className="object-cover"

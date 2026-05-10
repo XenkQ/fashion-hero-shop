@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { withSiteBasePath } from "@/lib/site-paths";
 import type { Collection } from "@/types";
 
 interface CollectionHeroProps {
@@ -29,7 +30,7 @@ export function CollectionHero({ collection }: CollectionHeroProps) {
       {/* Background image */}
       {hasImage && (
         <Image
-          src={collection.heroImage}
+          src={withSiteBasePath(collection.heroImage)}
           alt={collection.name}
           fill
           className="object-cover"
