@@ -144,7 +144,7 @@ export function MegaMenuNav() {
           >
             <Link
               href={href}
-              className="text-[12px] font-medium uppercase tracking-[0.5px] text-charcoal hover:opacity-60 transition-opacity"
+              className="cursor-pointer text-[12px] font-medium uppercase tracking-[0.5px] text-charcoal hover:opacity-60 transition-opacity"
             >
               {label}
             </Link>
@@ -152,7 +152,7 @@ export function MegaMenuNav() {
         ))}
         <Link
           href="/collections/new-arrivals"
-          className="text-[12px] font-medium uppercase tracking-[0.5px] text-charcoal hover:opacity-60 transition-opacity"
+          className="cursor-pointer text-[12px] font-medium uppercase tracking-[0.5px] text-charcoal hover:opacity-60 transition-opacity"
         >
           NEW
         </Link>
@@ -178,7 +178,7 @@ export function MegaMenuNav() {
                         <Link
                           href={link.href}
                           onClick={() => setActiveMenu(null)}
-                          className="text-[13px] text-charcoal/70 hover:text-charcoal transition-colors"
+                          className="cursor-pointer text-[13px] text-charcoal/70 hover:text-charcoal transition-colors"
                         >
                           {link.label}
                         </Link>
@@ -240,7 +240,7 @@ export function MobileMegaMenuContent({ onLinkClick }: { onLinkClick: () => void
             <Link
               key={label}
               href={href}
-              className="block text-nav py-2"
+              className="block cursor-pointer text-nav py-2"
               onClick={onLinkClick}
             >
               {label}
@@ -253,7 +253,7 @@ export function MobileMegaMenuContent({ onLinkClick }: { onLinkClick: () => void
           <div key={label}>
             <button
               onClick={() => setExpanded(isOpen ? null : label)}
-              className="flex items-center justify-between w-full text-nav py-2"
+              className="flex cursor-pointer items-center justify-between w-full text-nav py-2"
             >
               {label}
               <span className="text-[12px] text-warm-gray">{isOpen ? "−" : "+"}</span>
@@ -271,7 +271,7 @@ export function MobileMegaMenuContent({ onLinkClick }: { onLinkClick: () => void
                           <Link
                             href={link.href}
                             onClick={onLinkClick}
-                            className="block text-[13px] text-charcoal/70 hover:text-charcoal py-0.5"
+                            className="block cursor-pointer text-[13px] text-charcoal/70 hover:text-charcoal py-0.5"
                           >
                             {link.label}
                           </Link>
@@ -287,7 +287,7 @@ export function MobileMegaMenuContent({ onLinkClick }: { onLinkClick: () => void
       })}
       <Link
         href="/collections/new-arrivals"
-        className="block text-nav py-2"
+        className="block cursor-pointer text-nav py-2"
         onClick={onLinkClick}
       >
         NEW

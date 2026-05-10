@@ -19,8 +19,12 @@ export default function LoginPage() {
       setError("Please fill in all fields.");
       return;
     }
-    await login(email, password);
-    router.push("/account");
+    try {
+      await login(email, password);
+      router.push("/account");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to sign in.");
+    }
   }
 
   return (
