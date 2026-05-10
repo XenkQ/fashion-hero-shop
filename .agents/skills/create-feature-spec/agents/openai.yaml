@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Feature Spec"
+  short_description: "Draft repo-ready feature specs"
+  default_prompt: "Use $create-feature-spec to draft a FashionHero feature spec from my notes."

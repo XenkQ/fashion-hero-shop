@@ -15,6 +15,7 @@ import {
   OrderHistoryMenuIcon,
   SignOutMenuIcon,
 } from "./icons";
+import { Eye } from "lucide-react";
 import { SearchModal } from "./search-modal";
 import { MegaMenuNav, MobileMegaMenuContent } from "./mega-menu";
 import { useAuth } from "./auth-provider";
@@ -182,6 +183,12 @@ export function Header({ onCartOpen, cartCount = 0, wishlistCount = 0 }: HeaderP
                     Order History
                   </Link>
                 )}
+                {user.role === "seller" && (
+                  <Link href="/seller/visibility" role="menuitem" className={menuItemClass} onClick={handleAccountMenuLinkClick}>
+                    <Eye className="h-4 w-4" aria-hidden="true" />
+                    Visibility
+                  </Link>
+                )}
                 <button type="button" role="menuitem" className={menuItemClass} onClick={handleLogout}>
                   <SignOutMenuIcon />
                   Sign out
@@ -253,6 +260,17 @@ export function Header({ onCartOpen, cartCount = 0, wishlistCount = 0 }: HeaderP
               >
                 <OrderHistoryMenuIcon />
                 Order History
+              </Link>
+            )}
+            {user.role === "seller" && (
+              <Link
+                href="/seller/visibility"
+                role="menuitem"
+                className="flex cursor-pointer items-center gap-2 text-[13px] text-charcoal/70 hover:text-charcoal py-2"
+                onClick={handleAccountMenuLinkClick}
+              >
+                <Eye className="h-4 w-4" aria-hidden="true" />
+                Visibility
               </Link>
             )}
             <button

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { CloseIcon, SearchIcon } from "./icons";
 import { products } from "@/data/products";
@@ -18,6 +18,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const handleClose = useCallback(() => {
+    setQuery("");
+    onClose();
+  }, [onClose]);
+
   const results = useMemo(() => {
     if (!query.trim()) return [];
     const q = query.toLowerCase();
@@ -29,7 +34,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       inputRef.current?.focus();
       document.body.style.overflow = "hidden";
     } else {
-      setQuery("");
       document.body.style.overflow = "";
     }
     return () => {
@@ -39,20 +43,20 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     }
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
       return () => document.removeEventListener("keydown", handleKeyDown);
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, handleClose]);
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={handleClose} />
 
       {/* Drop-down panel */}
       <div className="relative bg-white shadow-lg w-full">
@@ -68,7 +72,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               placeholder="Search for shoes..."
               className="flex-1 text-base text-charcoal placeholder:text-warm-gray outline-none bg-transparent"
             />
-            <button onClick={onClose} className="p-1 hover:opacity-60 transition-opacity" aria-label="Close search">
+            <button onClick={handleClose} className="p-1 hover:opacity-60 transition-opacity" aria-label="Close search">
               <CloseIcon />
             </button>
           </div>
@@ -86,7 +90,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <Link
                         key={product.id}
                         href={`/products/${product.slug}`}
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="flex items-center gap-4 p-2 rounded hover:bg-cream transition-colors"
                       >
                         <div
