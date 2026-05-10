@@ -3,13 +3,23 @@
 OPPORTUNITY: Jako seller chcę inwestować mały budżet w rozwój sprzedaży na platformie i płacić za konkretne efekty.  
 OUTCOME: Zwiększyć MRR z pakietów Growth VAS do 250 000 PLN miesięcznie w pół roku z 40% odnowień.
 
-## Co budujemy & User Flow
+## Co budujemy
 
-Zakładka "Widoczność" (tylko zalogowany panel sellera) pokazująca nagłówek "Uwidocznij swoje produkty", pakiety Growth VAS i opcję ręcznej konfiguracji. Interfejs to makieta do badania zainteresowania – akcje otworzą zamykany popup powiadomienia, nie ma zapisywania zamówienia ani płatności.
+Opcję "Widoczność" w istniejącym account dropdown dla zalogowanego konta sellera. Po kliknięciu seller widzi ekran z nagłówkiem "Uwidocznij swoje produkty", pakietami Growth VAS i opcją ręcznej konfiguracji. Interfejs to makieta do badania zainteresowania - akcje otwierają zamykany popup powiadomienia, nie ma zapisywania zamówienia ani płatności.
+
+## User flow
+
+1. Zalogowany seller otwiera istniejący account dropdown.
+2. W dropdownie widzi opcję "Widoczność" i klika ją.
+3. System pokazuje widok pakietów Growth VAS z nagłówkiem "Uwidocznij swoje produkty".
+4. Seller wybiera pakiet lub opcję ręcznej konfiguracji.
+5. System pokazuje responsywny popup informujący, że badamy zainteresowanie i powiadomimy wkrótce.
 
 ## Kryteria akceptacji
 
 - Interfejs w języku polskim.
+- Opcja "Widoczność" jest dostępna jako osobna pozycja w istniejącym account dropdown tylko dla zalogowanego konta sellera.
+- Konta bez roli sellera nie widzą opcji "Widoczność" w account dropdown.
 - 3 karty pakietów: "Średni" (299 PLN, podst. widoczność, raport), "Wysoki" (599 PLN, więcej produktów, detale ofert), "Ultra Wysoki" (999 PLN, priorytet, pełne wsparcie i doradztwo).
 - Każdy pakiet posiada przycisk "Wybierz".
 - Pod kartami pakietów separator "lub", a pod nim karta "Skonfiguruj ręcznie" (bez ceny, dla preferujących pełną kontrolę).
@@ -20,12 +30,16 @@ Zakładka "Widoczność" (tylko zalogowany panel sellera) pokazująca nagłówek
 ## Czego NIE budujemy
 
 - Zarządzania widocznością, płatności, faktur, subskrypcji.
-- Panelu admina do pakietów, zbierania maili, analityki kliknięć.
+- Nowego panelu sellera ani panelu admina do pakietów.
+- Zbierania maili, analityki kliknięć.
 
 ## Przykłady
 
-Input: Seller (desktop) klika "Wybierz" na karcie pakietu "Wysoki".  
+Input: Seller (desktop) otwiera account dropdown, wybiera "Widoczność", a następnie klika "Wybierz" na karcie pakietu "Wysoki".  
 Oczekiwany rezultat: Wyświetla się popup dziękujący za zainteresowanie. Nie uruchamia się bramka płatności.
 
 Input: Seller otwiera widok na smartfonie.  
 Oczekiwany rezultat: Widzi karuzelę pakietów startującą od 999 PLN, z możliwością przewinięcia strzałką w lewo do tańszych opcji.
+
+Input: Kupujący bez roli sellera otwiera account dropdown.  
+Oczekiwany rezultat: Nie widzi opcji "Widoczność".
