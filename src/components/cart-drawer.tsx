@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { withSiteBasePath } from "@/lib/site-paths";
 import { CloseIcon, MinusIcon, PlusIcon } from "./icons";
 import type { CartItem } from "@/types";
 
@@ -99,7 +100,7 @@ export function CartDrawer({
                     >
                       {showThumb && (
                         <Image
-                          src={thumbSrc}
+                          src={withSiteBasePath(thumbSrc)}
                           alt={`${item.product.name} - ${item.color.name}`}
                           width={80}
                           height={80}

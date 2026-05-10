@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { withSiteBasePath } from "@/lib/site-paths";
 
 const categories = [
   {
@@ -47,7 +48,7 @@ export function CategoryRow() {
           >
             {/* Background image */}
             <Image
-              src={cat.image}
+              src={withSiteBasePath(cat.image)}
               alt={cat.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"

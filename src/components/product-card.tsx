@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { withSiteBasePath } from "@/lib/site-paths";
 import type { Product } from "@/types";
 import { WishlistButton } from "./wishlist-button";
 import { useQuickView } from "./quick-view-provider";
@@ -55,7 +56,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             )}
             {showImage ? (
               <Image
-                src={imageSrc}
+                src={withSiteBasePath(imageSrc)}
                 alt={`${product.name} - ${firstColor.name}`}
                 width={800}
                 height={800}

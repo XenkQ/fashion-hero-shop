@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { withSiteBasePath } from "@/lib/site-paths";
 import type { Product, ProductColor } from "@/types";
 import { CloseIcon } from "./icons";
 import { ColorSwatches } from "./color-swatches";
@@ -79,7 +80,7 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
           >
             {showImage ? (
               <Image
-                src={imageSrc}
+                src={withSiteBasePath(imageSrc)}
                 alt={`${product.name} - ${selectedColor.name}`}
                 width={800}
                 height={800}

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getCollection } from "@/data/collections";
@@ -5,11 +6,13 @@ import { collections } from "@/data/collections";
 import { getProductsByCollection } from "@/data/products";
 import { CollectionHero } from "@/components/collection-hero";
 import { CollectionView } from "@/components/collection-view";
+import { CollectionClientView } from "./collection-client-view";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ seller?: string }>;
 }
+
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return collections.map((c) => ({ slug: c.slug }));
@@ -29,9 +32,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function CollectionPage({ params, searchParams }: PageProps) {
+export default async function CollectionPage({ params }: PageProps) {
   const { slug } = await params;
-  const { seller } = await searchParams;
   const collection = getCollection(slug);
 
   if (!collection) {
@@ -43,11 +45,11 @@ export default async function CollectionPage({ params, searchParams }: PageProps
   return (
     <>
       <CollectionHero collection={collection} />
-      <CollectionView
-        products={products}
-        collectionName={collection.name}
-        initialSellerSlug={seller}
-      />
+      <Suspense
+        fallback={<CollectionView products={products} collectionName={collection.name} />}
+      >
+        <CollectionClientView products={products} collectionName={collection.name} />
+      </Suspense>
     </>
   );
 }
