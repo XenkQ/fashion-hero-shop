@@ -1,30 +1,57 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useMemo, useRef, useSyncExternalStore } from "react";
 import type { Product } from "@/types";
 import { products as allProducts } from "@/data/products";
 import { ProductCard } from "./product-card";
 import { ChevronLeftIcon, ChevronRightIcon } from "./icons";
 
 const STORAGE_KEY = "stepforward-recently-viewed";
+const RECENTLY_VIEWED_CHANGE_EVENT = "fashionhero-recently-viewed-change";
 const MAX_ITEMS = 8;
+const EMPTY_RECENTLY_VIEWED: string[] = [];
+let cachedStorageValue: string | null | undefined;
+let cachedRecentlyViewed: string[] = [];
+
+function getServerRecentlyViewedSnapshot(): string[] {
+  return EMPTY_RECENTLY_VIEWED;
+}
 
 function loadRecentlyViewed(): string[] {
   try {
     if (typeof window === "undefined") return [];
     const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    if (stored === cachedStorageValue) return cachedRecentlyViewed;
+
+    cachedStorageValue = stored;
+    cachedRecentlyViewed = stored ? JSON.parse(stored) : [];
+    return cachedRecentlyViewed;
   } catch {
+    cachedStorageValue = null;
+    cachedRecentlyViewed = [];
     return [];
   }
 }
 
 function saveRecentlyViewed(ids: string[]) {
   try {
+    cachedRecentlyViewed = ids;
+    cachedStorageValue = JSON.stringify(ids);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+    window.dispatchEvent(new Event(RECENTLY_VIEWED_CHANGE_EVENT));
   } catch {
     // localStorage unavailable
   }
+}
+
+function subscribeToRecentlyViewed(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(RECENTLY_VIEWED_CHANGE_EVENT, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(RECENTLY_VIEWED_CHANGE_EVENT, onStoreChange);
+  };
 }
 
 export function trackRecentlyViewed(productId: string) {
@@ -34,16 +61,19 @@ export function trackRecentlyViewed(productId: string) {
 }
 
 export function RecentlyViewed({ currentProductId }: { currentProductId: string }) {
-  const [recentProducts, setRecentProducts] = useState<Product[]>([]);
+  const recentlyViewedIds = useSyncExternalStore(
+    subscribeToRecentlyViewed,
+    loadRecentlyViewed,
+    getServerRecentlyViewedSnapshot
+  );
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ids = loadRecentlyViewed().filter((id) => id !== currentProductId);
-    const resolved = ids
+  const recentProducts = useMemo(() => {
+    const ids = recentlyViewedIds.filter((id) => id !== currentProductId);
+    return ids
       .map((id) => allProducts.find((p) => p.id === id))
       .filter((p): p is Product => !!p);
-    setRecentProducts(resolved);
-  }, [currentProductId]);
+  }, [currentProductId, recentlyViewedIds]);
 
   function scroll(direction: "left" | "right") {
     if (!scrollRef.current) return;

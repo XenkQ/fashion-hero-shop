@@ -33,7 +33,7 @@ export default function SellerPage() {
       <nav className="text-[11px] text-warm-gray mb-8 tracking-wide">
         <Link href="/" className="hover:text-charcoal transition-colors">Home</Link>
         <span className="mx-1.5">/</span>
-        <span className="text-charcoal">Seller Panel</span>
+        <span className="text-charcoal">Seller Dashboard</span>
       </nav>
 
       <div className="mb-10">

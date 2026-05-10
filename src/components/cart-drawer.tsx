@@ -75,12 +75,12 @@ export function CartDrawer({
                 Your cart is empty. Start shopping!
               </p>
               <div className="space-y-2">
-                <a href="/collections/womens" className="btn-cta block">
+                <Link href="/collections/womens" className="btn-cta block" onClick={onClose}>
                   SHOP WOMENS
-                </a>
-                <a href="/collections/mens" className="btn-cta-outline block">
+                </Link>
+                <Link href="/collections/mens" className="btn-cta-outline block" onClick={onClose}>
                   SHOP MENS
-                </a>
+                </Link>
               </div>
             </div>
           ) : (
