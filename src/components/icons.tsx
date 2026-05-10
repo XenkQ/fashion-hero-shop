@@ -53,6 +53,88 @@ export function UserIcon({ className }: IconProps) {
   );
 }
 
+// Source: https://www.svgrepo.com/svg/380123/user-account-profile
+export function AccountMenuIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn("h-4 w-4", className)}
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="7.5" r="3.5" />
+      <path d="M5 20a7 7 0 0 1 14 0" />
+      <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2h11A2.5 2.5 0 0 1 20 4.5v15A2.5 2.5 0 0 1 17.5 22h-11A2.5 2.5 0 0 1 4 19.5z" />
+    </svg>
+  );
+}
+
+// Source: https://www.svgrepo.com/svg/6439132/order-history
+export function OrderHistoryMenuIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn("h-4 w-4", className)}
+      aria-hidden="true"
+    >
+      <path d="M7 3h10a2 2 0 0 1 2 2v16l-3-1.8-3 1.8-3-1.8-3 1.8V5a2 2 0 0 1 2-2z" />
+      <path d="M9 8h6" />
+      <path d="M9 12h6" />
+      <path d="M9 16h3" />
+    </svg>
+  );
+}
+
+// Source: https://www.svgrepo.com/vectors/seller/
+export function SellerPanelMenuIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn("h-4 w-4", className)}
+      aria-hidden="true"
+    >
+      <path d="M4 10h16l-1.2-5H5.2z" />
+      <path d="M6 10v10h12V10" />
+      <path d="M9 20v-5h6v5" />
+      <path d="M4 10a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0" />
+    </svg>
+  );
+}
+
+// Source: https://www.svgrepo.com/svg/379638/sign-out
+export function SignOutMenuIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn("h-4 w-4", className)}
+      aria-hidden="true"
+    >
+      <path d="M10 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4" />
+      <path d="M15 8l4 4-4 4" />
+      <path d="M19 12H9" />
+    </svg>
+  );
+}
+
 export function CartIcon({ className }: IconProps) {
   return (
     <svg
