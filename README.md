@@ -60,7 +60,10 @@ Then open <http://localhost:3000>. Next.js refreshes the browser as you save cha
 ```bash
 npm run dev    # Start development server
 npm run live   # Start live-reload development server
-npm run build  # Production build
+npm run build  # Local production build
+npm run preview  # Build and preview locally on http://localhost:3002
+npm run start  # Preview an existing local build on http://localhost:3002
+npm run build:github  # Static export for GitHub Pages
 npm run lint   # ESLint check
 ```
 
@@ -143,7 +146,10 @@ Otwórz adres lokalnego serwera wypisany przez Next.js.
 
 ```bash
 npm run dev    # Uruchamia serwer developerski
-npm run build  # Sprawdza build produkcyjny
+npm run build  # Sprawdza lokalny build produkcyjny
+npm run preview  # Buduje i uruchamia lokalny podglad na http://localhost:3002
+npm run start  # Uruchamia istniejacy lokalny build na http://localhost:3002
+npm run build:github  # Tworzy statyczny export dla GitHub Pages
 npm run lint   # Uruchamia ESLint
 ```
 

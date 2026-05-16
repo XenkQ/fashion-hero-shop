@@ -1,17 +1,21 @@
 import type { NextConfig } from "next";
 
 const siteBasePath = "/fashion-hero-shop";
-const isProduction = process.env.NODE_ENV === "production";
+const isGitHubPagesBuild = process.env.GITHUB_PAGES_BUILD === "true";
 
 const nextConfig: NextConfig = {
-  output: "export",
-  trailingSlash: true,
-  basePath: isProduction ? siteBasePath : undefined,
+  ...(isGitHubPagesBuild
+    ? {
+        output: "export" as const,
+        trailingSlash: true,
+        basePath: siteBasePath,
+      }
+    : {}),
   images: {
     unoptimized: true,
   },
   env: {
-    NEXT_PUBLIC_BASE_PATH: isProduction ? siteBasePath : "",
+    NEXT_PUBLIC_BASE_PATH: isGitHubPagesBuild ? siteBasePath : "",
   },
 };
 

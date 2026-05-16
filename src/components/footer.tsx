@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookieSettingsButton } from "./cookie-settings-button";
 
 const footerSections = [
   {
@@ -116,9 +117,12 @@ export function Footer() {
               US ($)
             </span>
           </div>
-          <p className="text-xs text-white/30">
-            &copy; {new Date().getFullYear()} FashionHero, Inc. All Rights Reserved.
-          </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <CookieSettingsButton />
+            <p className="text-xs text-white/30">
+              &copy; {new Date().getFullYear()} FashionHero, Inc. All Rights Reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
