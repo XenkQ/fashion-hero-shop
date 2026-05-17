@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { usePostHog } from "posthog-js/react";
 import { Check, Sparkles } from "lucide-react";
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth-provider";
+import { useCookieConsent } from "@/components/posthog-provider";
 import { cn } from "@/lib/utils";
 
 interface GrowthPackage {
@@ -59,7 +61,7 @@ function PackageCard({
 }: {
   pack: GrowthPackage;
   highlighted?: boolean;
-  onSelect: (label: string) => void;
+  onSelect: () => void;
 }) {
   return (
     <article
@@ -103,7 +105,7 @@ function PackageCard({
       <button
         type="button"
         className="btn-cta mt-auto w-full cursor-pointer"
-        onClick={() => onSelect(pack.name)}
+        onClick={onSelect}
       >
         Select
       </button>
@@ -167,9 +169,58 @@ function InterestModal({
 
 export function SellerVisibilityGrowth() {
   const { user } = useAuth();
+  const { consent } = useCookieConsent();
+  const posthog = usePostHog();
   const router = useRouter();
   const [activePackageIndex, setActivePackageIndex] = useState(2);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  const captureGrowthVasInterest = useCallback(
+    ({
+      selectionType,
+      packageName,
+      pricePln,
+    }: {
+      selectionType: "package" | "manual";
+      packageName: string | null;
+      pricePln: number | null;
+    }) => {
+      if (consent?.status !== "accepted" || !posthog.__loaded || !user) return;
+
+      posthog.capture("growth_vas_interest_submitted", {
+        source: "seller_visibility",
+        selection_type: selectionType,
+        package_name: packageName,
+        price_pln: pricePln,
+        role: user.role,
+        viewport: window.matchMedia("(min-width: 768px)").matches ? "desktop" : "mobile",
+      });
+    },
+    [consent?.status, posthog, user],
+  );
+
+  const handlePackageSelect = useCallback(
+    (pack: GrowthPackage) => {
+      captureGrowthVasInterest({
+        selectionType: "package",
+        packageName: pack.name,
+        pricePln: pack.price,
+      });
+
+      setSelectedOption(`Package ${pack.name}`);
+    },
+    [captureGrowthVasInterest],
+  );
+
+  const handleManualConfigurationSelect = useCallback(() => {
+    captureGrowthVasInterest({
+      selectionType: "manual",
+      packageName: null,
+      pricePln: null,
+    });
+
+    setSelectedOption("Manual configuration");
+  }, [captureGrowthVasInterest]);
 
   useEffect(() => {
     if (!user) {
@@ -217,7 +268,7 @@ export function SellerVisibilityGrowth() {
               key={pack.name}
               pack={pack}
               highlighted={pack.price === 999}
-              onSelect={(label) => setSelectedOption(`Package ${label}`)}
+              onSelect={() => handlePackageSelect(pack)}
             />
           ))}
         </div>
@@ -249,7 +300,7 @@ export function SellerVisibilityGrowth() {
           <PackageCard
             pack={activePackage}
             highlighted={activePackage.price === 999}
-            onSelect={(label) => setSelectedOption(`Package ${label}`)}
+            onSelect={() => handlePackageSelect(activePackage)}
           />
         </div>
       </section>
@@ -288,7 +339,7 @@ export function SellerVisibilityGrowth() {
         <button
           type="button"
           className="btn-cta mt-6 w-full cursor-pointer md:mt-0 md:w-auto"
-          onClick={() => setSelectedOption("Manual configuration")}
+          onClick={handleManualConfigurationSelect}
         >
           Select
         </button>
