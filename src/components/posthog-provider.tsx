@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { CloseIcon } from "@/components/icons";
 import posthog from "posthog-js";
 import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -36,6 +37,7 @@ const CookieConsentContext = createContext<CookieConsentContextValue | null>(nul
 const CONSENT_STORAGE_KEY = "fashionhero_cookie_consent_v1";
 const CONSENT_CHANGE_EVENT = "fashionhero-cookie-consent-change";
 const CONSENT_VERSION = 1;
+const POSTHOG_HOST_LABEL = process.env.NEXT_PUBLIC_POSTHOG_HOST || "the configured PostHog host";
 let cachedConsentStorageValue: string | null | undefined;
 let cachedConsent: CookieConsentRecord | null = null;
 
@@ -190,10 +192,7 @@ function PostHogPageView({ consentStatus }: { consentStatus: AnalyticsConsent | 
     if (consentStatus !== "accepted" || !pathname || !ph) return;
     if (!ensurePostHogInitialized()) return;
 
-    let url = window.origin + pathname;
-    const search = searchParams?.toString();
-    if (search) url += `?${search}`;
-    ph.capture("$pageview", { $current_url: url });
+    ph.capture("$pageview", { $current_url: window.location.href });
   }, [consentStatus, pathname, searchParams, ph]);
 
   return null;
@@ -261,10 +260,11 @@ function CookieSettingsModal() {
           </div>
           <button
             type="button"
-            className="rounded-md px-2 py-1 text-sm text-warm-gray transition-colors hover:bg-cream-light hover:text-charcoal focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+            aria-label="Close cookie settings"
+            className="grid size-9 shrink-0 place-items-center rounded-full text-warm-gray transition-colors hover:bg-cream-light hover:text-charcoal focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
             onClick={closeSettings}
           >
-            Close
+            <CloseIcon className="size-4" />
           </button>
         </div>
 
@@ -285,8 +285,8 @@ function CookieSettingsModal() {
             >
               <span className="sr-only">Analytics</span>
               <span
-                className={`absolute top-1 size-5 rounded-full bg-white shadow transition-transform ${
-                  analyticsEnabled ? "translate-x-6" : "translate-x-1"
+                className={`absolute top-1 left-1 size-5 rounded-full bg-white shadow transition-transform ${
+                  analyticsEnabled ? "translate-x-5" : "translate-x-0"
                 }`}
               />
             </button>
@@ -294,9 +294,7 @@ function CookieSettingsModal() {
         </div>
 
         <div className="mt-5 space-y-3 text-sm leading-6 text-warm-gray">
-          <p>
-            Vendor: PostHog EU Cloud via <code>NEXT_PUBLIC_POSTHOG_HOST</code>.
-          </p>
+          <p>Vendor: PostHog EU Cloud via {POSTHOG_HOST_LABEL}.</p>
           <p>
             Purpose: product analytics, feature performance, behavior analysis, and session replay if enabled.
           </p>
